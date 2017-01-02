@@ -59,9 +59,10 @@ window.onload = function() {
 	var root = document.getElementById('root');
 	var clicked = false;
 	// buttonContinue.onlick = function() {
-		
+
 	// };
-	root.onclick = function() {
+	root.onclick = function(e) {
+		e.preventDefault();
 		if ( lifeTime === 0 ) {
 			// setTimeout(function() {
 			// 	// Reset
