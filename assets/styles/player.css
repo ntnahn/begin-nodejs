@@ -1,0 +1,16 @@
+/*
+Create music player with canvas effects like
+https://www.facebook.com/yeah1music/videos/1510656028962161/
+*/
+.main {
+	background-color: #4caf50;
+}
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+    transform: translate(-50%, -50%);
+    color: #3e2723;
+    font-size: 5em;
+    font-family: monospace;
+}
