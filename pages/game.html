@@ -4,9 +4,22 @@
 		<link href="../assets/styles/game.css"  rel="stylesheet" type="text/css"/>
 		<link href="../assets/styles/normalize.css"  rel="stylesheet" type="text/css"/>
 		<link rel="shortcut icon" href="../assets/images/res/mipmap-hdpi/ic_launcher.png" type="image/png" />
+		<script type='text/javascript' src="../assets/js/game.js"></script>
 		<title>GAME</title>
 	</head>
 	<body>
-		<img id="" src="../assets/images/res/mipmap-hdpi/ic_launcher.png" type="image/png" />
+		<div class="main disable-select-text" id="root">
+			<div class="horizontal-center">
+				<span id="time-display">00:00:00</span>
+			</div>
+			<div class="horizontal-center result">
+				<span id="result">0 time(s)</span>
+				<span> | best: </span>
+				<span id="best-result">0</span>
+			</div>
+			<div class="center">
+				<span id="continue" class="hidden continue">Continue</span>
+			</div>
+		</div>
 	</body>
 </html>

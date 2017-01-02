@@ -1,0 +1,49 @@
+/*
+Try to click/touch fast as you can
+*/
+.main {
+	width: 100%;
+	height: 100vh;
+	background-color: #4caf50;
+}
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+    transform: translate(-50%, -50%);
+    color: #3e2723;
+    font-size: 3em;
+}
+.horizontal-center {
+	position: absolute;
+	left: 50%;
+    transform: translate(-50%, 0);
+    color: #3e2723;
+    font-size: 3em;
+    font-family: monospace;
+}
+.vertical-center {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+	color: #3e2723;
+    font-size: 5em;
+    font-family: monospace;
+}
+.result {
+	top: 10vh;
+}
+.disable-select-text {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently not supported by any browser */
+}
+.continue {
+	cursor: pointer;
+}
+.hidden {
+	display: none;
+}

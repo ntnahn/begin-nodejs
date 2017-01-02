@@ -48,7 +48,6 @@
 			var time = 0;
 			var timeDisplay = document.getElementById('time-display');
 			var timer = function() {
-				console.log('time', time);
 				timeDisplay.innerHTML = formatTimeSecToFullTime(time);
 				time++;
 				setTimeout(timer, 1000);
