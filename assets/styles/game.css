@@ -32,6 +32,7 @@ Try to click/touch fast as you can
 }
 .result {
 	top: 10vh;
+	font-size: 2em;
 }
 .disable-select-text {
   -webkit-touch-callout: none; /* iOS Safari */
