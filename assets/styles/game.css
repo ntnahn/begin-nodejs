@@ -1,5 +1,9 @@
 /*
 Try to click/touch fast as you can
+- Make two buttons, one increase, one decrease.
+- Let user click on button increase to get more point
+- But sometime we switch two buttons to kidding user to choose button descrease
+- Ahihi
 */
 .main {
 	width: 100%;

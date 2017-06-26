@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="../assets/styles/normalize.css"  rel="stylesheet" type="text/css"/>
+		<script src="../assets/js/getScreenId.js"></script>
+		<script src="../assets/js/jquery-3.1.1.min.js"></script>
+		<title>Screen capture</title>
+		<style>
+			.main {
+				width: 100%;
+				height: 100vh;
+				background-color: #4caf50;
+			}
+		</style>
+	</head>
+	<body class="main">
+		<h3>Screen capture test</h3>
+		<button onclick="handleCaptureScreen()">Capture screen</button>
+		<video id="your-video" width="500">
+			Your browser is not support video tag
+		</video>
+		<script>
+			function handleCaptureScreen() {
+				console.log('handleCaptureScreen');
+				getScreenId(function (error, sourceId, screen_constraints) {
+					// error    == null || 'permission-denied' || 'not-installed' || 'installed-disabled' || 'not-chrome'
+					// sourceId == null || 'string' || 'firefox'
+					// screen_constraints.audio = true;
+					console.log('error', error);
+					console.log('sourceId', sourceId);
+					console.log('screen_constraints');
+					console.log(screen_constraints);
+					navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+					navigator.getUserMedia(screen_constraints, function (stream) {
+						var videoTag = document.getElementById('your-video');
+						videoTag.src = URL.createObjectURL(stream);
+						// share this "MediaStream" object using RTCPeerConnection API
+					}, function (error) {
+						console.error(error);
+					});
+				});
+			}
+		</script>
+	</body>
+</html>
