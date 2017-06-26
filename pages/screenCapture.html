@@ -34,6 +34,7 @@
 					navigator.getUserMedia(screen_constraints, function (stream) {
 						var videoTag = document.getElementById('your-video');
 						videoTag.src = URL.createObjectURL(stream);
+						videoTag.play();
 						// share this "MediaStream" object using RTCPeerConnection API
 					}, function (error) {
 						console.error(error);
