@@ -27,8 +27,6 @@
 		<script>
 			var localStream;
 			window.localStream = localStream;
-			var videoScreenTag = document.getElementById('screen');
-			var videoWebcamTag = document.getElementById('webcam');
 			function handleCaptureScreen() {
 				console.log('handleCaptureScreen');
 				getScreenId(function (error, sourceId, screen_constraints) {
@@ -40,6 +38,7 @@
 					console.log('screen_constraints');
 					console.log(screen_constraints);
 					navigator.mediaDevices.getUserMedia(screen_constraints).then(function(stream) {
+						var videoScreenTag = document.getElementById('screen');
 						/* use the stream */
 						videoScreenTag.src = URL.createObjectURL(stream);
 						videoScreenTag.play();
@@ -53,6 +52,7 @@
 				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 				navigator.getUserMedia({audio: true, video: true}, function(stream) {
 					// Set your video displays
+					var videoWebcamTag = document.getElementById('webcam');
 					videoWebcamTag.src = URL.createObjectURL(stream);
 					videoWebcamTag.play();
 					localStream = stream;
@@ -75,10 +75,12 @@
 								screenTracks = screenTracks.concat(videoTracks);
 								var screenMediaStream = window.screenMediaStream = new MediaStream(screenTracks);
 
+
+								var videoWebcamTag = document.getElementById('webcam');
 								videoWebcamTag.src = URL.createObjectURL(stream);
 								videoWebcamTag.play();
 
-
+								var videoScreenTag = document.getElementById('screen');
 								videoScreenTag.src = URL.createObjectURL(screenMediaStream);
 								videoScreenTag.play();
 							} else {
