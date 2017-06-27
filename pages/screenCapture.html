@@ -69,11 +69,16 @@
 							// Push the stream to video tags
 							if(stream.getVideoTracks()[1]) {
 								var videoTracks = [stream.getVideoTracks()[1]];
-								var outputTracks = [];
-								outputTracks = outputTracks.concat(videoTracks);
-								var outputMediaStream = window.outputMediaStream = new MediaStream(outputTracks);
-								videoWebcamTag.src = URL.createObjectURL(outputMediaStream);
+								var screenTracks = [];
+								screenTracks = screenTracks.concat(videoTracks);
+								var screenMediaStream = window.screenMediaStream = new MediaStream(screenTracks);
+
+								videoWebcamTag.src = URL.createObjectURL(stream);
 								videoWebcamTag.play();
+
+
+								videoScreenTag.src = URL.createObjectURL(screenMediaStream);
+								videoScreenTag.play();
 							} else {
 								console.log('Have only one video track');
 							}
