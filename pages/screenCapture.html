@@ -16,10 +16,20 @@
 	<body class="main">
 		<h3>Screen capture test</h3>
 		<button onclick="handleCaptureScreen()">Capture screen</button>
-		<video id="your-video" width="500" autoplay>
+		<button onclick="handleCaptureWebcam()">Capture webcam</button>
+		<button onclick="handleCaptureAll()">Capture all</button>
+		<video id="screen" width="500" autoplay>
+			Your browser is not support video tag
+		</video>
+		<video id="webcam" width="500" autoplay>
 			Your browser is not support video tag
 		</video>
 		<script>
+			var localStream;
+			window.localStream = localStream;
+			var videoScreenTag = document.getElementById('screen');
+			var videoWebcamTag = document.getElementById('webcam');
+			navigator.getUserMedia = navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia;
 			function handleCaptureScreen() {
 				console.log('handleCaptureScreen');
 				getScreenId(function (error, sourceId, screen_constraints) {
@@ -30,15 +40,50 @@
 					console.log('sourceId', sourceId);
 					console.log('screen_constraints');
 					console.log(screen_constraints);
-					navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 					navigator.getUserMedia(screen_constraints, function (stream) {
-						var videoTag = document.getElementById('your-video');
-						videoTag.src = URL.createObjectURL(stream);
-						videoTag.play();
-						// share this "MediaStream" object using RTCPeerConnection API
+						videoScreenTag.src = URL.createObjectURL(stream);
+						videoScreenTag.play();
+						localStream = stream;
 					}, function (error) {
 						console.error(error);
 					});
+				});
+			}
+			function handleCaptureWebcam() {
+				navigator.getUserMedia({audio: true, video: true}, function(stream) {
+					// Set your video displays
+					videoWebcamTag.src = URL.createObjectURL(stream);
+					videoWebcamTag.play();
+					localStream = stream;
+				}, function () {
+					alert('Have error when getUserMedia');
+				});
+			}
+			function handleCaptureAll() {
+				navigator.getUserMedia({audio: true, video: true}, function(stream) {
+					getScreenId(function (error, sourceId, screen_constraints) {
+						navigator.getUserMedia(screen_constraints, function (screenStream) {
+							stream.addTrack(screenStream.getVideoTracks()[0]);
+							localStream = stream;
+
+							// Push the stream to video tags
+							if(stream.getVideoTracks()[1]) {
+								var videoTracks = [stream.getVideoTracks()[1]];
+								var outputTracks = [];
+								outputTracks = outputTracks.concat(videoTracks);
+								var outputMediaStream = window.outputMediaStream = new MediaStream(outputTracks);
+								videoWebcamTag.src = URL.createObjectURL(outputMediaStream);
+								videoWebcamTag.play();
+							} else {
+								console.log('Have only one video track');
+							}
+						}, function (error) {
+							console.error(error);
+						});
+					});
+				}, function (err) {
+					alert('Have error when getUserMedia');
+					console.log(err);
 				});
 			}
 		</script>
