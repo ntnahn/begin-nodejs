@@ -29,7 +29,6 @@
 			window.localStream = localStream;
 			var videoScreenTag = document.getElementById('screen');
 			var videoWebcamTag = document.getElementById('webcam');
-			navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 			function handleCaptureScreen() {
 				console.log('handleCaptureScreen');
 				getScreenId(function (error, sourceId, screen_constraints) {
@@ -40,6 +39,7 @@
 					console.log('sourceId', sourceId);
 					console.log('screen_constraints');
 					console.log(screen_constraints);
+					navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 					navigator.getUserMedia(screen_constraints, function (stream) {
 						videoScreenTag.src = URL.createObjectURL(stream);
 						videoScreenTag.play();
@@ -50,6 +50,7 @@
 				});
 			}
 			function handleCaptureWebcam() {
+				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 				navigator.getUserMedia({audio: true, video: true}, function(stream) {
 					// Set your video displays
 					videoWebcamTag.src = URL.createObjectURL(stream);
@@ -60,6 +61,7 @@
 				});
 			}
 			function handleCaptureAll() {
+				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 				navigator.getUserMedia({audio: true, video: true}, function(stream) {
 					getScreenId(function (error, sourceId, screen_constraints) {
 						navigator.getUserMedia(screen_constraints, function (screenStream) {
