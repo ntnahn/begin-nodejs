@@ -49,8 +49,8 @@
 				});
 			}
 			function handleCaptureWebcam() {
-				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-				navigator.getUserMedia({audio: true, video: true}, function(stream) {
+//				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+				navigator.mediaDevices.getUserMedia({audio: true, video: true}, function(stream) {
 					// Set your video displays
 					var videoWebcamTag = document.getElementById('webcam');
 					videoWebcamTag.src = URL.createObjectURL(stream);
@@ -61,8 +61,8 @@
 				});
 			}
 			function handleCaptureAll() {
-				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-				navigator.getUserMedia({audio: true, video: true}, function(stream) {
+//				navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+				navigator.mediaDevices.getUserMedia({audio: true, video: true}, function(stream) {
 					getScreenId(function (error, sourceId, screen_constraints) {
 						navigator.getUserMedia(screen_constraints, function (screenStream) {
 							stream.addTrack(screenStream.getVideoTracks()[0]);
