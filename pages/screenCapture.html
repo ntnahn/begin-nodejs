@@ -39,12 +39,12 @@
 					console.log('sourceId', sourceId);
 					console.log('screen_constraints');
 					console.log(screen_constraints);
-					navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-					navigator.getUserMedia(screen_constraints, function (stream) {
+					navigator.mediaDevices.getUserMedia(screen_constraints).then(function(stream) {
+						/* use the stream */
 						videoScreenTag.src = URL.createObjectURL(stream);
 						videoScreenTag.play();
 						localStream = stream;
-					}, function (error) {
+					}).catch(function(err) {
 						console.error(error);
 					});
 				});
