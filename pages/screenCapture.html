@@ -38,8 +38,10 @@
 					console.log('screen_constraints');
 					console.log(screen_constraints);
 					navigator.mediaDevices.getUserMedia(screen_constraints).then(function(stream) {
-						var videoScreenTag = document.getElementById('screen');
 						/* use the stream */
+						var videoScreenTag = document.getElementById('screen');
+						console.log('stream');
+						console.log(stream);
 						videoScreenTag.src = URL.createObjectURL(stream);
 						videoScreenTag.play();
 						localStream = stream;
@@ -53,6 +55,8 @@
 				navigator.mediaDevices.getUserMedia({audio: true, video: true}, function(stream) {
 					// Set your video displays
 					var videoWebcamTag = document.getElementById('webcam');
+					console.log('stream');
+					console.log(stream);
 					videoWebcamTag.src = URL.createObjectURL(stream);
 					videoWebcamTag.play();
 					localStream = stream;
@@ -75,6 +79,11 @@
 								screenTracks = screenTracks.concat(videoTracks);
 								var screenMediaStream = window.screenMediaStream = new MediaStream(screenTracks);
 
+								console.log('stream');
+								console.log(stream);
+
+								console.log('screenMediaStream');
+								console.log(screenMediaStream);
 
 								var videoWebcamTag = document.getElementById('webcam');
 								videoWebcamTag.src = URL.createObjectURL(stream);
