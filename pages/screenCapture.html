@@ -89,8 +89,8 @@
 					videoWebcamTag.src = URL.createObjectURL(stream);
 					videoWebcamTag.play();
 					localStream = stream;
-				}, function () {
-					alert('Have error when getUserMedia');
+				}).catch(function(err) {
+					console.error(error);
 				});
 			}
 			function handleCaptureAll() {
@@ -128,13 +128,12 @@
 							} else {
 								console.log('Have only one video track');
 							}
-						}, function (error) {
+						}).catch(function(err) {
 							console.error(error);
 						});
 					});
-				}, function (err) {
-					alert('Have error when getUserMedia');
-					console.log(err);
+				}).catch(function(err) {
+					console.error(error);
 				});
 			}
 		</script>
