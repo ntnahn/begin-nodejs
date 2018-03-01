@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="../assets/styles/normalize.css"  rel="stylesheet" type="text/css"/>
+		<script src="../assets/js/getScreenId.js"></script>
+		<script src="../assets/js/jquery-3.1.1.min.js"></script>
+		<title>Screen capture</title>
+		<style>
+			.main {
+				width: 100%;
+				height: 100vh;
+				background-color: #4caf50;
+			}
+		</style>
+	</head>
+	<body class="main">
+		<h3>Screen capture test</h3>
+		<button onclick="handleSwitchCamera()">Switch camera</button>
+		<video id="video" width="500" autoplay>
+			Your browser is not support video tag
+		</video>
+		<script>
+            var videoTag = document.getElementById('video');
+
+            function handleSwitchCamera() {
+                console.log('HandleSwitchCamera');
+            }
+            function loadDefaultCamera() {
+              navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( ( stream, error ) => {
+                if ( error ) {
+                  console.log( 'error' );
+                  console.log( error );
+                  return;
+                }
+                window.mediaStream = stream;
+
+                videoTag.srcObject = stream;
+              });
+            }
+            loadDefaultCamera();
+		</script>
+	</body>
+</html>
