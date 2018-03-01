@@ -21,11 +21,39 @@
 		</video>
 		<script>
             var videoTag = document.getElementById('video');
+            var currentCamera = 'front';
 
             function handleSwitchCamera() {
                 console.log('HandleSwitchCamera');
+                if ( currentCamera === 'front' ) {
+                  // Switch to back
+                  loadBackCamera();
+                  currentCamera = 'back';
+                } else {
+                  loadFrontCamera();
+                  currentCamera = 'front';
+                }
             }
-            function loadDefaultCamera() {
+
+            function loadBackCamera() {
+              navigator.mediaDevices.getUserMedia({
+                video: {
+                  facingMode: 'environment'
+                },
+                audio: true
+              }).then( ( stream, error ) => {
+                if ( error ) {
+                  console.log( 'error' );
+                  console.log( error );
+                  return;
+                }
+                window.mediaStream = stream;
+
+                videoTag.srcObject = stream;
+              });
+            }
+
+            function loadFrontCamera() {
               navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( ( stream, error ) => {
                 if ( error ) {
                   console.log( 'error' );
@@ -37,7 +65,7 @@
                 videoTag.srcObject = stream;
               });
             }
-            loadDefaultCamera();
+            loadFrontCamera();
 		</script>
 	</body>
 </html>
