@@ -16,12 +16,31 @@
 	<body class="main">
 		<h3>Screen capture test</h3>
 		<button onclick="handleSwitchCamera()">Switch camera</button>
+		<button onclick="handleStopCamera()">Stop camera</button>
 		<video id="video" width="500" autoplay>
 			Your browser is not support video tag
 		</video>
 		<script>
             var videoTag = document.getElementById('video');
             var currentCamera = 'front';
+
+            function removeStream(mediaStream) {
+              if (!mediaStream) {
+                return;
+              }
+              // Stop stream
+              if (mediaStream.stop) {
+                mediaStream.stop();
+              } else {
+                mediaStream.getTracks().forEach(function (track) {
+                  track.stop();
+                })
+              }
+            }
+
+            function handleStopCamera() {
+              removeStream(window.mediaStream);
+            }
 
             function handleSwitchCamera() {
                 console.log('HandleSwitchCamera');
@@ -36,9 +55,13 @@
             }
 
             function loadBackCamera() {
+              console.log('loadBackCamera');
+              removeStream(window.mediaStream);
               navigator.mediaDevices.getUserMedia({
                 video: {
-                  facingMode: 'environment'
+                  facingMode: 'environment',
+                  width: 640,
+                  height: 480
                 },
                 audio: true
               }).then( ( stream, error ) => {
@@ -54,6 +77,8 @@
             }
 
             function loadFrontCamera() {
+              console.log('loadFrontCamera');
+              removeStream(window.mediaStream);
               navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( ( stream, error ) => {
                 if ( error ) {
                   console.log( 'error' );
