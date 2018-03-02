@@ -12,15 +12,25 @@
 				height: 100vh;
 				background-color: #4caf50;
 			}
+            .hidden {
+                display: none;
+            }
 		</style>
 	</head>
 	<body class="main">
+        <button onclick="handleLoadCamera()" id="buttonLoadCamera">Load camera</button>
 		<video id="video" width="100%" height="auto" autoplay>
 			Your browser is not support video tag
 		</video>
 		<script>
             var videoTag = window.videoTag = document.getElementById('video');
             var currentCamera = 'front';
+
+            function handleLoadCamera() {
+              var buttonLoadCamera = document.getElementById('buttonLoadCamera');
+              buttonLoadCamera.className = 'hidden';
+              loadFrontCamera();
+            }
 
             function removeStream(mediaStream) {
               if (!mediaStream) {
@@ -116,7 +126,7 @@
                 }, 1000);
               });
             }
-            loadFrontCamera();
+            //loadFrontCamera();
 		</script>
 	</body>
 </html>
