@@ -15,14 +15,11 @@
 		</style>
 	</head>
 	<body class="main">
-		<h3>Screen capture test</h3>
-		<button onclick="handleSwitchCamera()">Switch camera</button>
-		<button onclick="handleStopCamera()">Stop camera</button>
-		<video id="video" width="500" autoplay>
+		<video id="video" width="100%" height="auto" autoplay>
 			Your browser is not support video tag
 		</video>
 		<script>
-            var videoTag = document.getElementById('video');
+            var videoTag = window.videoTag = document.getElementById('video');
             var currentCamera = 'front';
 
             function removeStream(mediaStream) {
@@ -64,7 +61,7 @@
                   width: 1280, height: 720
                 },
                 audio: true
-              }).then( ( stream, error ) => {
+              }).then( function( stream, error ) {
                 if ( error ) {
                   console.log( 'error' );
                   console.log( error );
@@ -79,7 +76,19 @@
             function loadFrontCamera() {
               console.log('loadFrontCamera');
               removeStream(window.mediaStream);
-              navigator.mediaDevices.getUserMedia({video: { facingMode: 'user', width: 1280, height: 720 }, audio: true}).then( ( stream, error ) => {
+              var screenWidth = screen.width;
+              var screenHeight = screen.height;
+              console.log('screenWidth', screenWidth);
+              console.log('screenHeight', screenHeight);
+
+              navigator.mediaDevices.getUserMedia({
+                video: {
+                  facingMode: 'user',
+                  width: screenWidth,
+                  height: screenHeight
+                },
+                audio: true
+              }).then( function( stream, error ) {
                 if ( error ) {
                   console.log( 'error' );
                   console.log( error );
@@ -88,6 +97,11 @@
                 window.mediaStream = stream;
 
                 videoTag.srcObject = stream;
+
+                setTimeout(function() {
+                  console.log('video Width', videoTag.videoWidth);
+                  console.log('video Height', videoTag.videoHeight);
+                }, 1000);
               });
             }
             loadFrontCamera();
