@@ -59,9 +59,7 @@
               removeStream(window.mediaStream);
               navigator.mediaDevices.getUserMedia({
                 video: {
-                  facingMode: 'environment',
-                  width: 640,
-                  height: 480
+                  facingMode: 'environment'
                 },
                 audio: true
               }).then( ( stream, error ) => {
