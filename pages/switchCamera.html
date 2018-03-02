@@ -76,8 +76,20 @@
             function loadFrontCamera() {
               console.log('loadFrontCamera');
               removeStream(window.mediaStream);
-              var screenWidth = screen.width;
-              var screenHeight = screen.height;
+              var screenWidth;
+              var screenHeight;
+
+              if ( screen.orientation === 'portrait-primary' || screen.orientation === 'portrait-secondary' ) {
+                // Screen on mobile
+                // Switch between width and height
+                screenHeight = screen.width;
+                screenWidth = screen.height;
+              } else {
+                // Normal size on desktop
+                screenWidth = screen.width;
+                screenHeight = screen.height;
+              }
+              
               console.log('screenWidth', screenWidth);
               console.log('screenHeight', screenHeight);
 
