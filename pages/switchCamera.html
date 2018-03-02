@@ -78,7 +78,7 @@
             function loadFrontCamera() {
               console.log('loadFrontCamera');
               removeStream(window.mediaStream);
-              navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( ( stream, error ) => {
+              navigator.mediaDevices.getUserMedia({video: { width: 720, height: 1280 }, audio: true}).then( ( stream, error ) => {
                 if ( error ) {
                   console.log( 'error' );
                   console.log( error );
