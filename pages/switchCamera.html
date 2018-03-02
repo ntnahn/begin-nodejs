@@ -124,6 +124,9 @@
                   console.log('video Width', videoTag.videoWidth);
                   console.log('video Height', videoTag.videoHeight);
                 }, 1000);
+              }).catch(function(err) {
+                console.log('err');
+                alert(err.toString());
               });
             }
             //loadFrontCamera();
