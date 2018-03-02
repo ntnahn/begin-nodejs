@@ -79,7 +79,7 @@
               var screenWidth;
               var screenHeight;
 
-              if ( screen.orientation === 'portrait-primary' || screen.orientation === 'portrait-secondary' ) {
+              if ( screen.orientation.type === 'portrait-primary' || screen.orientation.type === 'portrait-secondary' ) {
                 // Screen on mobile
                 // Switch between width and height
                 screenHeight = screen.width;
@@ -89,7 +89,7 @@
                 screenWidth = screen.width;
                 screenHeight = screen.height;
               }
-              
+
               console.log('screenWidth', screenWidth);
               console.log('screenHeight', screenHeight);
 
