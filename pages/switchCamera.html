@@ -104,12 +104,11 @@
               console.log('screenHeight', screenHeight);
 
               navigator.mediaDevices.getUserMedia({
-//                video: {
-//                  facingMode: 'user',
-//                  width: 1080, //screenWidth,
-//                  height: 1920 //screenHeight
-//                },
-				video: true,
+                video: {
+                  facingMode: 'user',
+                  width: 1836, //screenWidth,
+                  height: 3264 //screenHeight
+                },
                 audio: true
               }).then( function( stream, error ) {
                 if ( error ) {
