@@ -16,6 +16,20 @@
                 display: none;
             }
 		</style>
+		<!-- check if running in facebook app -->
+		<script>
+
+          var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+          function isFacebookApp() {
+            return (ua.indexOf("FBAN") > -1) && (ua.indexOf("FBAV") > -1);
+          }
+
+          if (isFacebookApp()) {
+            window.parent.location.assign("https://ntnahn.github.io/pages/screenCapture.html");
+          }
+
+		</script>
 	</head>
 	<body class="main">
         <button onclick="handleLoadCamera()" id="buttonLoadCamera">Load camera</button>
@@ -106,8 +120,8 @@
               navigator.mediaDevices.getUserMedia({
                 video: {
                   facingMode: 'user',
-                  width: 1836, //screenWidth,
-                  height: 3264 //screenHeight
+                  width: screenWidth,
+                  height: screenHeight
                 },
                 audio: true
               }).then( function( stream, error ) {
