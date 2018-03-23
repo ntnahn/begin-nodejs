@@ -5,6 +5,7 @@
 		<script src="../assets/js/getScreenId.js"></script>
 		<script src="../assets/js/jquery-3.1.1.min.js"></script>
 		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/lmfefbfbmlknjfhmopclennialmpdbpj" />
 		<title>Screen capture</title>
 		<style>
 			.main {
@@ -16,28 +17,9 @@
                 display: none;
             }
 		</style>
-		<!-- check if running in facebook app -->
-		<script type="text/javascript">
-          window.onload = function() {
-            var desktopFallback = "http://ntnahn.github.io/",
-              mobileFallback = "http://ntnahn.github.io/",
-              app = "vnd.youtube://4KnNVK-udTU";
-            if( /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
-              window.location = app;
-              window.setTimeout(function() {
-                window.location = mobileFallback;
-              }, 25);
-            } else {
-              window.location = desktopFallback;
-            }
-            function killPopup() {
-              window.removeEventListener('pagehide', killPopup);
-            }
-            window.addEventListener('pagehide', killPopup);
-          };
-		</script>
 	</head>
 	<body class="main">
+        <button onclick="handleInstallExtension()" id="buttonInstallExtension">Install Extension</button>
         <button onclick="handleLoadCamera()" id="buttonLoadCamera">Load camera</button>
 		<video id="video" width="100%" height="auto" autoplay>
 			Your browser is not support video tag
@@ -45,6 +27,17 @@
 		<script>
             var videoTag = window.videoTag = document.getElementById('video');
             var currentCamera = 'front';
+
+            function handleInstallExtension() {
+              console.log('handleInstallExtension');
+              var screenExtURL = 'https://chrome.google.com/webstore/detail/lmfefbfbmlknjfhmopclennialmpdbpj';
+              chrome.webstore.install(screenExtURL,
+				function() {
+                	console.log('Install success');
+            	}, function() {
+                	console.log('Install failure');
+              	});
+			}
 
             function handleLoadCamera() {
               var buttonLoadCamera = document.getElementById('buttonLoadCamera');
