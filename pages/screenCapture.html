@@ -18,12 +18,16 @@
 		<button onclick="handleCaptureScreen()">Capture screen</button>
 		<button onclick="handleCaptureWebcam()">Capture webcam</button>
 		<button onclick="handleCaptureAll()">Capture all</button>
+		<button onclick="handleCaptureBackgroundAudio()">Capture background audio</button>
 		<video id="screen" width="500" autoplay>
 			Your browser is not support video tag
 		</video>
 		<video id="webcam" width="500" autoplay>
 			Your browser is not support video tag
 		</video>
+		<audio id="audio" controls autoplay>
+			Your browser is not support audio tag
+		</audio>
 		<script>
 			var localStream;
 			window.localStream = localStream;
@@ -56,6 +60,33 @@
 				}
 			}
 			dkm();
+			function handleCaptureBackgroundAudio() {
+              var audioTag = document.getElementById('audio');
+              var audioContext = new AudioContext();
+              var desktopSoundGainNode = audioContext.createGain();
+              var stream = new MediaStream();
+              desktopSoundGainNode.gain.value = 1;
+
+              var audioDestionation = audioContext.createMediaStreamDestination();
+
+			  //var audioSource = audioContext.createMediaStreamSource(stream);
+			  //audioSource.connect(desktopSoundGainNode);
+
+//              thiz.micGainNode = audioContext.createGain();
+//              thiz.micGainNode.gain.value = 1;
+
+			  //var audioSource2 = audioContext.createMediaStreamSource(micStream);
+			  //audioSource2.connect(thiz.micGainNode);
+
+              desktopSoundGainNode.connect(audioDestionation);
+//              thiz.micGainNode.connect(audioDestionation);
+
+//              stream.removeTrack(stream.getAudioTracks()[0]);
+              audioDestionation.stream.getAudioTracks().forEach(function(track) {
+                stream.addTrack(track);
+              });
+              audioTag.srcObject = stream;
+			}
 			function handleCaptureScreen() {
 				console.log('handleCaptureScreen');
 				getScreenId(function (error, sourceId, screen_constraints) {

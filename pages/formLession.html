@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="https://ntnahn.github.io/assets/styles/normalize.css" rel="stylesheet" type="text/css"/>
+		<script src="https://tesse.io/assets/js/getScreenId.js"></script>
+		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<script src="https://ntnahn.github.io/assets/js/jquery-3.1.1.min.js"></script>
+		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/cgplojjghbkfimkgggajefldkpmaklll" />
+		<title>Test screen extension install</title>
+		<style>
+			.main {
+				width: 100%;
+				height: 100vh;
+				background-color: #aeadb1;
+			}
+            .hidden {
+                display: none;
+            }
+		</style>
+	</head>
+	<body class="main">
+        <button onclick="handleInstallExtension()" id="buttonInstallExtension">Install Extension</button>
+		<video id="video" width="100%" height="auto" autoplay>
+			Your browser is not support video tag
+		</video>
+		<script>
+            var videoTag = window.videoTag = document.getElementById('video');
+
+            function handleInstallExtension() {
+              console.log('handleInstallExtension');
+              var screenExtURL = 'https://chrome.google.com/webstore/detail/cgplojjghbkfimkgggajefldkpmaklll';
+              if ( chrome && chrome.webstore && chrome.webstore.install ) {
+                chrome.webstore.install(screenExtURL,
+                  function() {
+                    console.log('Install success and get screen to display');
+                    getScreenId(function (error, sourceId, screen_constraints) {
+                      if ( error ) {
+                        console.log('Error cmnr:', error);
+                        return false;
+                      }
+                      console.log('sourceId', sourceId);
+                      console.log('screen_constraints', screen_constraints);
+
+                      navigator.mediaDevices.getUserMedia(screen_constraints).then(function(mediaStream) {
+                        console.log('mediaStream', mediaStream);
+                        videoTag.srcObject = mediaStream;
+                      });
+                    });
+                  }, function() {
+                    console.log('Install failure');
+                  });
+			  } else {
+                console.log('Chrome webstore install is not defined!');
+			  }
+			}
+		</script>
+	</body>
+</html>
