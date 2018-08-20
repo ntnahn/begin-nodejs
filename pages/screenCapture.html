@@ -20,6 +20,7 @@
 		<button onclick="handleCaptureWebcam()">Capture webcam</button>
 		<button onclick="handleCaptureAll()">Capture all</button>
 		<button onclick="handleCaptureBackgroundAudio()">Capture background audio</button>
+		<button onclick="getInstalledApps()">Get installed apps</button>
 		<video id="screen" width="500" autoplay>
 			Your browser is not support video tag
 		</video>
@@ -93,6 +94,17 @@
               });
               audioTag.srcObject = stream;
 			}
+
+			function getInstalledApps() {
+              navigator.getInstalledRelatedApps().then(relatedApps => {
+				for (let app of relatedApps) {
+					console.log(app.platform);
+					console.log(app.url);
+			    	console.log(app.id);
+			    }
+			  });
+			}
+
 			function handleCaptureScreen() {
 				console.log('handleCaptureScreen');
 				getScreenId(function (error, sourceId, screen_constraints) {
