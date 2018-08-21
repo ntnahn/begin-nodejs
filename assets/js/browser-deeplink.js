@@ -79,7 +79,6 @@
      * @returns {String} Play store https:// link
      */
     var getStoreURLAndroid = function() {
-        return 'tesse://';
         var baseurl = "market://details?id=";
         var id = settings.android.appId;
         return id ? (baseurl + id) : null;        
@@ -193,6 +192,7 @@
      * @return {Boolean} true, if you're on a mobile device and the link was opened
      */
     var open = function(uri) {
+        console.log('uri', uri);
         if (!isMobile()) {
             return false;
         }
