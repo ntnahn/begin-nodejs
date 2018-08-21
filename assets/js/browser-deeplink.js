@@ -79,6 +79,7 @@
      * @returns {String} Play store https:// link
      */
     var getStoreURLAndroid = function() {
+        return 'tesse://';
         var baseurl = "market://details?id=";
         var id = settings.android.appId;
         return id ? (baseurl + id) : null;        
