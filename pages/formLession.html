@@ -5,6 +5,7 @@
 		<script src="https://tesse.io/assets/js/getScreenId.js"></script>
 		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 		<script src="https://ntnahn.github.io/assets/js/jquery-3.1.1.min.js"></script>
+		<script src="https://raw.githubusercontent.com/hampusohlsson/browser-deeplink/master/browser-deeplink.min.js"></script>
 		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/cgplojjghbkfimkgggajefldkpmaklll" />
 		<title>Test screen extension install</title>
 		<style>
@@ -17,8 +18,24 @@
                 display: none;
             }
 		</style>
+		<script type="text/javascript">
+          deeplink.setup({
+            iOS: {
+              appId: "284882215",
+              appName: "facebook"
+            },
+            android: {
+              appId: "com.tessemobile"
+            }
+          });
+          function clickHandler(uri) {
+            deeplink.open(uri);
+            return false;
+          }
+		</script>
 	</head>
 	<body class="main">
+		<a href="#" data-uri="fb://profile" onclick="clickHandler(this.dataset.uri)">open fb://profile</a>
         <button onclick="handleInstallExtension()" id="buttonInstallExtension">Install Extension</button>
 		<video id="video" width="100%" height="auto" autoplay>
 			Your browser is not support video tag
