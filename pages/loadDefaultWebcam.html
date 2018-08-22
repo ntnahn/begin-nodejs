@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="../assets/styles/normalize.css"  rel="stylesheet" type="text/css"/>
+		<script src="../assets/js/getScreenId.js"></script>
+		<script src="../assets/js/jquery-3.1.1.min.js"></script>
+		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/lmfefbfbmlknjfhmopclennialmpdbpj" />
+		<title>Screen capture</title>
+		<style>
+			.main {
+				width: 100%;
+				height: 100vh;
+				background-color: #4caf50;
+			}
+            .hidden {
+                display: none;
+            }
+		</style>
+	</head>
+	<body class="main">
+        <button onclick="handleLoadDefaultCamera()" id="buttonLoadDefaultCamera">Load default camera</button>
+        <button onclick="handleLoadCamera()" id="buttonLoadCamera">Load first camera</button>
+		<video id="video" width="100%" height="auto" autoplay>
+			Your browser is not support video tag
+		</video>
+		<script>
+            var videoTag = window.videoTag = document.getElementById('video');
+
+            function handleLoadDefaultCamera() {
+              var buttonLoadDefaultCamera = document.getElementById('buttonLoadDefaultCamera');
+              buttonLoadDefaultCamera.className = 'hidden';
+
+              navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(mediaSource) {
+                videoTag.srcObject = mediaSource;
+			  });
+            }
+            function handleLoadCamera() {
+              var buttonLoadCamera = document.getElementById('buttonLoadCamera');
+              buttonLoadCamera.className = 'hidden';
+              navigator.mediaDevices.enumerateDevices().then(function(devices) {
+                let audioInputDevices = devices.filter(function(device) { return device.kind === 'audioinput'});
+                let videoInputDevices = devices.filter(function(device) { return device.kind === 'videoinput'});
+
+                let firstAudioInput = audioInputDevices.length > 0 ? audioInputDevices[0] : null;
+                let firstVideoInput = videoInputDevices.length > 0 ? videoInputDevices[0] : null;
+
+                navigator.mediaDevices.getUserMedia({video: {
+                  optional: [{
+                    sourceId: firstVideoInput.deviceId
+                  }]
+                }, audio: {
+                  optional: [{
+                    sourceId: firstAudioInput.deviceId
+                  }]
+                }}).then(function(mediaSource) {
+                  videoTag.srcObject = mediaSource;
+                });
+              });
+            }
+		</script>
+	</body>
+</html>
