@@ -254,10 +254,10 @@ main() {
     apt-get purge -yq kms-core-6.0 kms-elements-6.0 kurento-media-server-6.0 > /dev/null 2>&1  # Remove older packages
 
     if [ ! -f /etc/apt/sources.list.d/nodesource.list ]; then
-      curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
     fi
-    if ! apt-cache madison nodejs | grep -q node_10; then
-      err "Did not detect nodejs 10.x candidate for installation"
+    if ! apt-cache madison nodejs | grep -q node_12; then
+      err "Did not detect nodejs 12.x candidate for installation"
     fi
 
     if ! apt-key list A15703C6 | grep -q A15703C6; then
