@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Player</title>
+</head>
+<body>
+  <h1>Audio Player</h1>
+  <audio id="audioPlayer" controls>
+    <source src="mewringtone.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <h2>Select Speaker:</h2>
+  <select id="speakerSelect">
+    <!-- Options will be populated by JavaScript -->
+  </select>
+
+  <script>
+    // Function to update the available speakers
+    function updateSpeakers() {
+      const audio = document.getElementById('audioPlayer');
+      const speakerSelect = document.getElementById('speakerSelect');
+      
+      // Clear existing options
+      speakerSelect.innerHTML = '';
+
+      // Get available audio output devices
+      navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          devices.forEach(device => {
+            if (device.kind === 'audiooutput') {
+              const option = document.createElement('option');
+              option.value = device.deviceId;
+              option.text = device.label || `Speaker ${speakerSelect.length + 1}`;
+              speakerSelect.appendChild(option);
+            }
+          });
+        })
+        .catch(err => console.error('Error getting audio devices: ', err));
+    }
+
+    // Change audio output device when user selects a speaker
+    document.getElementById('speakerSelect').addEventListener('change', function() {
+      const selectedSpeakerId = this.value;
+      const audio = document.getElementById('audioPlayer');
+      audio.setSinkId(selectedSpeakerId)
+        .then(() => console.log(`Audio output set to ${selectedSpeakerId}`))
+        .catch(err => console.error('Error setting audio output: ', err));
+    });
+
+    // Update speakers initially
+    updateSpeakers();
+  </script>
+</body>
+</html>
